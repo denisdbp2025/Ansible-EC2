@@ -30,7 +30,7 @@ Se der pong, a conexão está ok.
 5. Criar o playbook Ansible
 Crie o arquivo install_nginx.yml:
 ---
-- name: Instalar e configurar NGINX
+- name: Instalar e configurar NGINX </br>
   hosts: nginx_servers
   become: yes
 
