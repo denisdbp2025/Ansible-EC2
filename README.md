@@ -37,33 +37,33 @@ Crie o arquivo install_nginx.yml:
   tasks:
 
     - name: Atualizar pacotes </br>
-      apt:
-        update_cache: yes
-      when: ansible_os_family == "Debian"
+      apt:</br>
+        update_cache: yes</br>
+      when: ansible_os_family == "Debian"</br>
 
     - name: Instalar NGINX (Debian/Ubuntu) </br>
-      apt:
-        name: nginx
-        state: present
-      when: ansible_os_family == "Debian"
+      apt:</br>
+        name: nginx</br>
+        state: present</br>
+      when: ansible_os_family == "Debian"</br>
 
     - name: Instalar NGINX (Amazon Linux 2) </br>
-      yum:
-        name: nginx
-        state: present
-      when: ansible_os_family == "RedHat"
+      yum:</br>
+        name: nginx</br>
+        state: present</br>
+      when: ansible_os_family == "RedHat"</br>
 
     - name: Iniciar e habilitar NGINX </br>
-      service:
-        name: nginx
-        state: started
-        enabled: yes
+      service:</br>
+        name: nginx</br>
+        state: started</br>
+        enabled: yes</br>
       
   handlers: </br>
-    - name: restart nginx
-      service:
-        name: nginx
-        state: restarted 
+    - name: restart nginx</br>
+      service:</br>
+        name: nginx</br>
+        state: restarted </br>
       
 Esse playbook funciona tanto para Ubuntu/Debian quanto para Amazon Linux 2.
 
@@ -75,11 +75,11 @@ Depois da execução:
 curl http://3.92.100.10
 
 Opcional: Criar página customizada
-Adicione ao playbook:
+Adicione ao playbook:</br>
     - name: Criar página HTML personalizada </br>
-      copy:
-        dest: /var/www/html/index.html
-        content: "<h1>NGINX instalado com Ansible!</h1>"
+      copy:</br>
+        dest: /var/www/html/index.html</br>
+        content: "<h1>NGINX instalado com Ansible!</h1>"</br>
 
 Algumas observações importantes:
 
@@ -87,11 +87,11 @@ Algumas observações importantes:
 Handlers são ações que só são executadas quando algum task notifica que algo mudou.
 
 Exemplo no playbook:
-handlers:
-  - name: restart nginx
-    service:
-      name: nginx
-      state: restarted
+handlers:</br>
+  - name: restart nginx</br>
+    service:</br>
+      name: nginx</br>
+      state: restarted</br>
 
 Esse handler apenas roda quando um task usa:
 notify: restart nginx
@@ -108,8 +108,8 @@ Handlers → ajudam a manter o idempotency e evitar reinícios desnecessários.
 2. Explicação de cada trecho do playbook
    Cabeçalho
 - name: Instalar e configurar NGINX em EC2 </br>
-  hosts: nginx_servers
-  become: yes
+  hosts: nginx_servers</br>
+  become: yes</br>
 
 
 hosts: define quais máquinas do inventário serão afetadas
@@ -118,17 +118,17 @@ become: diz que as tarefas precisam usar sudo
 
   Atualizar pacotes
 - name: Atualizar pacotes </br>
-  package:
-    update_cache: yes
+  package:</br>
+    update_cache: yes</br>
 
 O módulo package é genérico e funciona para apt, yum, etc.
 
-  Instalar NGINX
+  Instalar NGINX</br>
 - name: Instalar NGINX </br>
-  package:
-    name: nginx
-    state: present
-  notify: restart nginx
+  package:</br>
+    name: nginx</br>
+    state: present</br>
+  notify: restart nginx</br>
 
 
 Se o pacote já estiver instalado → nada muda, e o handler não é chamado.
@@ -136,9 +136,9 @@ Se instalar / atualizar → o handler será acionado.
 
   Criar página HTML
 - name: Página HTML customizada </br>
-  copy:
-    dest: /var/www/html/index.html
-    content: "<h1>Deploy via Ansible!</h1>"
+  copy:</br>
+    dest: /var/www/html/index.html</br>
+    content: "<h1>Deploy via Ansible!</h1>"</br>
 
 Se o arquivo já existir e estiver igual → Ansible não faz nada.
 Se mudar → handler é acionado.
@@ -146,9 +146,9 @@ Se mudar → handler é acionado.
   Handler
 handlers:
   - name: restart nginx </br>
-    service:
-      name: nginx
-      state: restarted
+    service:</br>
+      name: nginx</br>
+      state: restarted</br>
 
 Só executa quando notificado.
 
