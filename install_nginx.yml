@@ -1,0 +1,29 @@
+---
+- name: Instalar e configurar NGINX
+  hosts: nginx_servers
+  become: yes
+
+  tasks:
+
+    - name: Atualizar pacotes
+      apt:
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+
+    - name: Instalar NGINX (Debian/Ubuntu)
+      apt:
+        name: nginx
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Instalar NGINX (Amazon Linux 2)
+      yum:
+        name: nginx
+        state: present
+      when: ansible_os_family == "RedHat"
+
+    - name: Iniciar e habilitar NGINX
+      service:
+        name: nginx
+        state: started
+        enabled: yes
