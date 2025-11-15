@@ -36,30 +36,30 @@ Crie o arquivo install_nginx.yml:
 
   tasks:
 
-    - name: Atualizar pacotes
+    - name: Atualizar pacotes </br>
       apt:
         update_cache: yes
       when: ansible_os_family == "Debian"
 
-    - name: Instalar NGINX (Debian/Ubuntu)
+    - name: Instalar NGINX (Debian/Ubuntu) </br>
       apt:
         name: nginx
         state: present
       when: ansible_os_family == "Debian"
 
-    - name: Instalar NGINX (Amazon Linux 2)
+    - name: Instalar NGINX (Amazon Linux 2) </br>
       yum:
         name: nginx
         state: present
       when: ansible_os_family == "RedHat"
 
-    - name: Iniciar e habilitar NGINX
+    - name: Iniciar e habilitar NGINX </br>
       service:
         name: nginx
         state: started
         enabled: yes
       
-  handlers:
+  handlers: </br>
     - name: restart nginx
       service:
         name: nginx
@@ -76,7 +76,7 @@ curl http://3.92.100.10
 
 Opcional: Criar página customizada
 Adicione ao playbook:
-    - name: Criar página HTML personalizada
+    - name: Criar página HTML personalizada </br>
       copy:
         dest: /var/www/html/index.html
         content: "<h1>NGINX instalado com Ansible!</h1>"
@@ -107,7 +107,7 @@ Handlers → ajudam a manter o idempotency e evitar reinícios desnecessários.
 
 2. Explicação de cada trecho do playbook
    Cabeçalho
-- name: Instalar e configurar NGINX em EC2
+- name: Instalar e configurar NGINX em EC2 </br>
   hosts: nginx_servers
   become: yes
 
@@ -117,14 +117,14 @@ hosts: define quais máquinas do inventário serão afetadas
 become: diz que as tarefas precisam usar sudo
 
   Atualizar pacotes
-- name: Atualizar pacotes
+- name: Atualizar pacotes </br>
   package:
     update_cache: yes
 
 O módulo package é genérico e funciona para apt, yum, etc.
 
   Instalar NGINX
-- name: Instalar NGINX
+- name: Instalar NGINX </br>
   package:
     name: nginx
     state: present
@@ -135,7 +135,7 @@ Se o pacote já estiver instalado → nada muda, e o handler não é chamado.
 Se instalar / atualizar → o handler será acionado.
 
   Criar página HTML
-- name: Página HTML customizada
+- name: Página HTML customizada </br>
   copy:
     dest: /var/www/html/index.html
     content: "<h1>Deploy via Ansible!</h1>"
@@ -145,7 +145,7 @@ Se mudar → handler é acionado.
 
   Handler
 handlers:
-  - name: restart nginx
+  - name: restart nginx </br>
     service:
       name: nginx
       state: restarted
